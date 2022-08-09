@@ -1,9 +1,9 @@
 import Logo from '../Logo'
 import Menu from './Menu'
-import { NavBar, LogoSideBar } from './NavBar.styled'
+import { NavBar, LogoSideBar } from './SideBar.styled'
 import {Subtitle} from '../Fonts/Fonts'
 
-const NavBarLeft = () => {
+const SideBar = () => {
   return (
     <NavBar>
       <LogoSideBar>
@@ -14,4 +14,4 @@ const NavBarLeft = () => {
     </NavBar>
   )
 }
-export default NavBarLeft
+export default SideBar

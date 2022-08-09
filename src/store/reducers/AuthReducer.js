@@ -1,3 +1,4 @@
+
 const INITIAL_STATE = {
   auth: {
     token: '',
@@ -7,12 +8,14 @@ const INITIAL_STATE = {
 }
 
 const authReducer = (state = INITIAL_STATE, action) => {
+
   if (action.type === 'SET_LOGIN') {
     return {
       auth: {
         token: action.token,
         isLogged: true,
-        isLoading: false
+        isLoading: false,
+        
       }
     }
   }

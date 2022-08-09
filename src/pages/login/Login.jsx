@@ -10,6 +10,7 @@ import { Button } from '../../components/Button/Button'
 import { ErrorsAlert } from '../../components/ErrorsAlert'
 import { connect} from 'react-redux'
 import apiDBC from '../../services/apiDBC'
+import { useNavigate } from 'react-router-dom'
 
 const validate = values => {
   const errors = {};
@@ -25,14 +26,17 @@ const validate = values => {
 };
 
 const Login = ({auth, dispatch}) => {
+  const navigate = useNavigate()
+
   const handleLogin = async (values) => {
     try {
       const {data} = await apiDBC.post('/auth', values)
       const logado = {
         type: 'SET_LOGIN',
-        token: data
+        token: data,
       }
       dispatch(logado)
+      navigate('/')
     } catch (error) {
       console.log(error);
     }
