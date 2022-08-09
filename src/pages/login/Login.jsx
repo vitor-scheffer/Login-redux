@@ -1,15 +1,13 @@
 import { useFormik } from 'formik'
-import { useContext } from 'react'
 import * as Yup from 'yup'
-import { AuthContext } from '../context/AuthContext'
 import { ContainerLogin } from './Login.styled'
 import { Link } from 'react-router-dom'
-import Logo from '../components/Logo'
-import { Subtitle, Tittle, TextSm } from '../components/Fonts/Fonts'
-import { Card } from '../components/Card/Card'
-import { colorHoverMenu, colorPrimary } from '../consts'
-import { Button } from '../components/Button/Button'
-import { ErrorsAlert } from '../components/ErrorsAlert'
+import Logo from '../../components/Logo'
+import { Subtitle, Tittle, TextSm } from '../../components/Fonts/Fonts'
+import { Card } from '../../components/Card/Card'
+import { colorHoverMenu, colorPrimary } from '../../consts'
+import { Button } from '../../components/Button/Button'
+import { ErrorsAlert } from '../../components/ErrorsAlert'
 import { connect} from 'react-redux'
 import apiDBC from '../../services/apiDBC'
 
@@ -27,7 +25,7 @@ const validate = values => {
 };
 
 const Login = ({auth, dispatch}) => {
-  const handleLogin = (values) => {
+  const handleLogin = async (values) => {
     try {
       const {data} = await apiDBC.post('/auth', values)
       const logado = {
@@ -39,6 +37,8 @@ const Login = ({auth, dispatch}) => {
       console.log(error);
     }
   }
+
+  console.log(auth)
   const formik = useFormik({
     initialValues: {
       login: '',
