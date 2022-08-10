@@ -7,7 +7,8 @@ const Menu = () => {
     <>
     <NavSideBar>
       <ul>
-          <Item name="Pessoa" url="/people"/>
+          <Item name="Pessoa" url="/"/>
+          <Item name="Cadastrar Pessoa" url="/cadastrar-pessoa"/>
       </ul>
     </NavSideBar>
     <Button marginLeft='32px'>Sair</Button>

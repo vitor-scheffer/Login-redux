@@ -7,7 +7,7 @@ const NotFound = () => {
     <PageNotFound>
       <TitleNotFound>Página não encontrada</TitleNotFound>
       <img src={astronaut} alt="" />
-      <Link to="/"><TitleNotFound>Back to home</TitleNotFound></Link>
+      <Link to="/login"><TitleNotFound>Back to home</TitleNotFound></Link>
     </PageNotFound>
   )
 }

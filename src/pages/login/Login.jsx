@@ -1,5 +1,4 @@
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
 import { ContainerLogin } from './Login.styled'
 import { Link } from 'react-router-dom'
 import Logo from '../../components/Logo'
@@ -8,9 +7,10 @@ import { Card } from '../../components/Card/Card'
 import { colorHoverMenu, colorPrimary } from '../../consts'
 import { Button } from '../../components/Button/Button'
 import { ErrorsAlert } from '../../components/ErrorsAlert'
-import { connect} from 'react-redux'
-import apiDBC from '../../services/apiDBC'
+import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import * as AuthActions from '../../store/actions/AuthActions'
+
 
 const validate = values => {
   const errors = {};
@@ -25,24 +25,8 @@ const validate = values => {
   return errors;
 };
 
-const Login = ({auth, dispatch}) => {
+const Login = ({auth, handleLogin}) => {
   const navigate = useNavigate()
-
-  const handleLogin = async (values) => {
-    try {
-      const {data} = await apiDBC.post('/auth', values)
-      const logado = {
-        type: 'SET_LOGIN',
-        token: data,
-      }
-      dispatch(logado)
-      navigate('/')
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  console.log(auth)
   const formik = useFormik({
     initialValues: {
       login: '',
@@ -54,6 +38,7 @@ const Login = ({auth, dispatch}) => {
       resetForm()
     }
   })
+  console.log(auth)
 
   return (
     <ContainerLogin>
@@ -96,8 +81,12 @@ const Login = ({auth, dispatch}) => {
   )
 }
 
+const mapDispatchToProps = (dispatch, navigate) => ({
+  handleLogin: (values) => dispatch(AuthActions.handleLogin(values, dispatch, navigate))
+}) 
+
 const mapStateToProps = state => ({
   auth: state.authReducer.auth
 })
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export default axios.create({
+export const apiDbc = axios.create({
   baseURL: 'https://dbc-pessoa-api.herokuapp.com'
 });
 

@@ -1,37 +1,35 @@
-
 const INITIAL_STATE = {
   auth: {
-    token: '',
-    isLogged: false,
-    isLoading: true
+    token: null,
+    isLoading: true,
+    isAuth: false
   }
 }
 
 const authReducer = (state = INITIAL_STATE, action) => {
 
-  if (action.type === 'SET_LOGIN') {
+  switch (action.type) {
+    case 'SET_LOGIN': 
     return {
+      ...state,
       auth: {
         token: action.token,
-        isLogged: true,
         isLoading: false,
-        
+        isAuth: action.isAuth
       }
     }
-  }
-  
-  if (action.type === 'SET_LOGOUT') {
-    return {
-      auth: {
-        token: action.token,
-        isLogged: false,
-        isLoading: false,
-        
+    case 'SET_LOGOUT':
+      return {
+        auth: {
+          token: action.token,
+        }
       }
-    }
+    default:
+      return state
   }
+    
 
-  return state
+  
 } 
 
 export default authReducer
