@@ -33,9 +33,54 @@ select {
   width: 316px;
 }
 
+button:hover {
+  cursor: pointer;
+  background-color: #243cdb;
+}
+
 button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+.modalBackground {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.modalBackgroundEnd {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.closeBtn {
+  margin-right: 20px;
+  align-self: flex-end;
+}
+
+.btnsModal button:nth-child(1):hover {
+  background-color: #dd1717;
+  border: 1px solid #dd1717;
+}
+
+.btnsModal {
+  display: flex;
+  padding: 35px 0;
+  gap: 100px;
 }
 
 

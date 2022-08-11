@@ -1,59 +1,70 @@
-import { ModalEndereco, Body } from './Modal.styled'
-import { Button } from '../components/Button/Button'
-import { redColor, colorHoverMenu } from '../consts'
+import { ModalEndereco, Body } from '../../Utils/Modal.styled'
+import { Button } from '../../components/Button/Button'
+import { redColor, colorHoverMenu } from '../../consts'
 import { useState, useEffect } from 'react'
-import apiDbc from '../Services/apiDbc' 
-import {Subtitle, Text, TextSm } from '../components/Fonts/Fonts'
-import { Lista, Item, TitleList } from '../components/FlatList/Lista'
+import { apiDbc } from '../../services/api' 
+import {Subtitle, Text, TextSm } from '../../components/Fonts/Fonts'
+import { Lista, Item, TitleList } from '../../components/FlatList/Lista'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment'
-import photo from '../images/no-user.jpeg'
-import Modal from './Modal'
+import photo from '../../images/no-user.jpeg'
+import Modal from '../../Utils/Modal'
+import { connect } from 'react-redux'
+import Loading from '../../components/Loading/Loading'
+import * as AddressActions from '../../store/actions/AddressActions'
 
-const ModalDescription = ({close, setCadastro, setUpdate, id}) => {
-  const [pessoa, setPessoa] = useState()
+const Address = ({pessoa, loading, dispatch, openModalAddress}) => {
   const navigate = useNavigate()
-  const [openModal, setOpenModal] = useState(false)
-  const [idEndereco, setIdEndereco] = useState()
+  // const setup = async () => {
+  //   try {
+  //     const { data } = await apiDbc.get(`/pessoa/lista-completa?idPessoa=${id}`)
+  //     setPessoa(data[0])
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
-  const setup = async () => {
-    try {
-      const { data } = await apiDbc.get(`/pessoa/lista-completa?idPessoa=${id}`)
-      setPessoa(data[0])
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const setDelete = (idEndereco) => {
+  //   setIdEndereco(idEndereco)
+  //   setOpenModal(true)
+  // }
 
-  const setDelete = (idEndereco) => {
-    setIdEndereco(idEndereco)
-    setOpenModal(true)
-  }
+  // useEffect(() => {
+  //   setup()
+  // },[])
 
-  useEffect(() => {
-    setup()
-  },[])
-
-  const handleDelete = async () => {
+  const handleDelete = async (idModal, dispatch) => {
     const notify = () => toast("Endereço excluído com sucesso!");
     try {
-      await apiDbc.delete(`/endereco/${idEndereco}`)
+      await apiDbc.delete(`/endereco/${idModal}`)
     } catch (error) {
       console.log(error)
     }
     notify()
-    close()
+    dispatch({
+      type: 'SET_CLOSE_MODAL_ADDRESS'
+    })
+    navigate('/')
   }
 
-  if(pessoa) {
+  const setup = () => {
+  }
+  
+  useEffect(() => {
+    setup()
+  },[])
+
+  // if(loading) {
+  //   return ( <Loading /> )
+  // } 
+
     return (
-      
       <div className="modalBackgroundEnd">
       <ToastContainer />
       <ModalEndereco>
-        <Button width="80px" padding="10px" onClick={() =>{close()}} className="closeBtn" > Voltar </Button>
+        <Button width="80px" padding="10px" className="closeBtn" onClick={() => navigate('/')}> Voltar </Button>
         <div className="infoPessoa">
           <div>
           <img src={photo} alt="" />
@@ -92,10 +103,10 @@ const ModalDescription = ({close, setCadastro, setUpdate, id}) => {
               <p><TextSm>{item.estado}</TextSm></p>
               <p><TextSm>{item.pais}</TextSm></p>
               <div className="btnsEdit btnsEditModal">
-                <Button width="150px" onClick={() =>{setUpdate(item.idEndereco)}}>Editar Endereço</Button>
-                <Button width="150px" onClick={() => {setDelete(item.idEndereco)}}>Apagar Endereço</Button>
+                <Button width="150px" onClick={() => navigate(`/cadastrar-endereco/${pessoa.idPessoa}/${item.idEndereco}`)}>Editar Endereço</Button>
+                <Button width="150px" onClick={() => dispatch({type: 'SET_OPEN_MODAL_ADDRESS', idModal: item.idPessoa})}>Apagar Endereço</Button>
               </div>
-              {openModal && <Modal name="endereço."closeModal={setOpenModal} confirmModal={handleDelete}/>}
+              {openModalAddress && <Modal name="endereço."closeModal={AddressActions.setModalDelete} dispatch={dispatch} confirmModal={handleDelete}/>}
             </Item>
           )) : <h1>Ainda não existem endereços cadastrados.</h1>
           }
@@ -103,12 +114,19 @@ const ModalDescription = ({close, setCadastro, setUpdate, id}) => {
         </Lista>
         </Body>
         <div>
-          <Button onClick={setCadastro} width="180px">Cadastrar Endereço</Button>
+          <Button width="180px" onClick={() => navigate(`/cadastrar-endereco/${pessoa.idPessoa}`)}>Cadastrar Endereço</Button>
         </div>
         </ModalEndereco>
         
       </div> 
   )
   }
-}
-export default ModalDescription
+
+
+const mapStateToProps = state => ({
+  pessoa: state.addressReducer.pessoa,
+  loading: state.addressReducer.loading,
+  openModalAddress: state.addressReducer.openModalAddress
+})
+
+export default connect(mapStateToProps)(Address)

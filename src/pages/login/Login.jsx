@@ -34,7 +34,7 @@ const Login = ({auth, handleLogin}) => {
     },
     validate,
     onSubmit: (values, {resetForm}) => {
-      handleLogin(values)
+      handleLogin(values, navigate)
       resetForm()
     }
   })
@@ -74,16 +74,16 @@ const Login = ({auth, handleLogin}) => {
         </form>
         <div>
           <TextSm color={colorHoverMenu}>Don’t have an account?</TextSm>
-          <Link to='/usuarios'><TextSm color={colorPrimary}>Sign up</TextSm></Link>
+          <Link to='/cadastrar-usuario'><TextSm color={colorPrimary}>Sign up</TextSm></Link>
         </div> 
       </Card>
     </ContainerLogin>
   )
 }
 
-const mapDispatchToProps = (dispatch, navigate) => ({
-  handleLogin: (values) => dispatch(AuthActions.handleLogin(values, dispatch, navigate))
-}) 
+const mapDispatchToProps = (dispatch) => ({
+  handleLogin: (values, navigate) => dispatch(AuthActions.handleLogin(values, dispatch, navigate))
+})
 
 const mapStateToProps = state => ({
   auth: state.authReducer.auth

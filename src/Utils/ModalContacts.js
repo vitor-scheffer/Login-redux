@@ -2,7 +2,7 @@ import { ModalEndereco, Body } from './Modal.styled'
 import { Button } from '../components/Button/Button'
 import { redColor, colorHoverMenu } from '../consts'
 import { useState, useEffect } from 'react'
-import apiDBC from '../Services/apiDBC' 
+import apiDbc from '../Services/apiDbc' 
 import {Subtitle, Text, TextSm } from '../components/Fonts/Fonts'
 import { Lista, Item, TitleList } from '../components/FlatList/Lista'
 import { useNavigate } from 'react-router-dom'
@@ -20,7 +20,7 @@ const ModalContacts = ({close, setCadastro, setUpdate, id}) => {
 
   const setup = async () => {
     try {
-      const { data } = await apiDBC.get(`/pessoa/lista-completa?idPessoa=${id}`)
+      const { data } = await apiDbc.get(`/pessoa/lista-completa?idPessoa=${id}`)
       setPessoa(data[0])
     } catch (error) {
       console.log(error)
@@ -39,7 +39,7 @@ const ModalContacts = ({close, setCadastro, setUpdate, id}) => {
   const handleDelete = async () => {
     const notify = () => toast("Contato excluído com sucesso!");
     try {
-      await apiDBC.delete(`/contato/${idContato}`)
+      await apiDbc.delete(`/contato/${idContato}`)
     } catch (error) {
       console.log(error)
     }

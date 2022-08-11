@@ -1,4 +1,4 @@
-import apiDBC from "../../Services/apiDBC"
+import apiDbc from "../../Services/apiDbc"
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Modal from '../../Utils/Modal'
@@ -28,7 +28,7 @@ const FlasList = ({list, setup}) => {
     const notify = () => toast("Usuário apagado com sucesso!");
     let idPessoa = id
     try {
-      await apiDBC.delete(`/pessoa/${idPessoa}`)
+      await apiDbc.delete(`/pessoa/${idPessoa}`)
       setOpenModal(false)
       setup()
       notify()

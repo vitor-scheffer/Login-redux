@@ -1,11 +1,9 @@
 import * as Yup from 'yup'
 import moment from 'moment'
-import { useContext } from 'react'
 import  { IMaskInput }  from 'react-imask'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Formik, Field, Form } from 'formik'
-import { useParams } from 'react-router-dom'
-import { apiDbc } from '../../services/api'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Card } from '../../components/Card/Card'
 import { Button } from '../../components/Button/Button'
 import SideBar from '../../components/SideBar/SideBar'
@@ -16,12 +14,13 @@ import { TextSm } from '../../components/Fonts/Fonts'
 import { FormContentPeople } from '../../components/FormPeople';
 import UserInfo from '../../components/UserInfo';
 import { ErrorsAlert } from '../../components/ErrorsAlert'
+import { connect } from 'react-redux'
+import * as PessoaActions from '../../store/actions/PessoaActions'
+import Loading from '../../components/Loading/Loading'
  
-const PeopleForm = () => {
-  const { id } = useParams();
-  const [people, setPeople] = useState();
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [isError, setIsError] = useState(true);
+const PeopleForm = ({dispatch, pessoa, isUpdate, loading}) => {
+  const { idPessoa } = useParams()
+  const navigate = useNavigate()
 
   const userSchema = Yup.object().shape({
     nome: Yup.string().required('Campo obrigatório.'),
@@ -29,25 +28,27 @@ const PeopleForm = () => {
     cpf: Yup.string().matches(cpfValidation, 'Insira um CPF válido.').required('Campo obrigatório.'),
     email: Yup.string().email('Insira um email válido').required('Campo obrigatório.'),
   })
-  
-  const setup = async () => {
-    if (id) {
-      setIsUpdate(true)
-      try {
-        const { data } = await apiDbc.get(`/pessoa/lista-completa?idPessoa=${id}`)
-        setPeople(data[0])
-      } catch (error) {
-        console.log(error)
-      }
+
+  const setup = () => {
+    if (idPessoa) {
+      PessoaActions.setUpdatePessoa(idPessoa, dispatch)
+    } else {
+      dispatch(
+        {
+          type: 'SET_IS_UPDATE'
+        }
+      )
     }
   }
 
   useEffect(() => {
     setup()
+  },[])
 
-  },[]) 
-
-  if (people || !isUpdate) {
+  if (loading) {
+    return ( <Loading /> )
+  }
+ 
     return (
       <Section>
       <UserInfo tittle={isUpdate ? 'Atualizar Pessoa' : 'Cadastrar Pessoa'} />
@@ -55,16 +56,16 @@ const PeopleForm = () => {
       <Card width="100%" height="600px">
       <Formik
           initialValues={{
-            nome: isUpdate ? people.nome : '',
-            dataNascimento: isUpdate ? moment(people.dataNascimento, 'YY/YY/MMDD').format('DD-MM-YYYY') : '',
-            cpf: isUpdate ? people.cpf : '',
-            email: isUpdate ? people.email : '',
+            nome: isUpdate ? pessoa.nome : '',
+            dataNascimento: isUpdate ? moment(pessoa.dataNascimento, 'YY/YY/MMDD').format('DD-MM-YYYY') : '',
+            cpf: isUpdate ? pessoa.cpf : '',
+            email: isUpdate ? pessoa.email : '',
           }}
           validationSchema={userSchema}
           onSubmit={(values, {resetForm}) => {          
-            // values.cpf = values.cpf.replace(/[^0-9]/gi,'')
-            // values.dataNascimento = moment(values.dataNascimento, 'DD/MM/YYYY').format('YYYY-MM-DD')
-            // {isUpdate ? handleUpdate(values, id, setup, setIsUpdate) : handleRegister(values, setup) }
+            values.cpf = values.cpf.replace(/[^0-9]/gi,'')
+            values.dataNascimento = moment(values.dataNascimento, 'DD/MM/YYYY').format('YYYY-MM-DD')
+            {isUpdate ? PessoaActions.handleUpdate(values, idPessoa, setup, dispatch, navigate) : PessoaActions.handleRegisterPeople(values, setup, dispatch, navigate) }
             resetForm()
           }}
         >
@@ -124,5 +125,11 @@ const PeopleForm = () => {
       </Section>
     )
   }
-}
-export default PeopleForm
+
+const mapStateToProps = state => ({
+  pessoas: state.pessoaReducer.pessoas,
+  isUpdate: state.pessoaReducer.isUpdate,
+  loading: state.pessoaReducer.loading,
+  pessoa: state.pessoaReducer.pessoa
+}) 
+export default connect(mapStateToProps)(PeopleForm)

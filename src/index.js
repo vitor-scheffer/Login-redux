@@ -5,12 +5,14 @@ import reportWebVitals from './reportWebVitals';
 import Routers from './routers'
 import { Provider } from 'react-redux' 
 import store from './store'
+import { ToastContainer } from 'react-toastify';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <Routers />
+    <ToastContainer />
   </Provider>
 );
 

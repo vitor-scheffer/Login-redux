@@ -1,8 +1,12 @@
 import Item from './Item'
 import { Button } from '../Button/Button'
 import { NavSideBar } from './NavSideBar.styled'
+import { handleLogout } from '../../store/actions/AuthActions'
+import { useNavigate } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-const Menu = () => {
+const Menu = ({dispatch}) => {
+  const navigate = useNavigate()
   return (
     <>
     <NavSideBar>
@@ -11,9 +15,10 @@ const Menu = () => {
           <Item name="Cadastrar Pessoa" url="/cadastrar-pessoa"/>
       </ul>
     </NavSideBar>
-    <Button marginLeft='32px'>Sair</Button>
+    <Button onClick={() => {handleLogout(dispatch, navigate)}} marginLeft='32px'>Sair</Button>
     </>
      
   )
 }
-export default Menu
+
+export default connect()(Menu)
