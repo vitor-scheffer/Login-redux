@@ -17,6 +17,18 @@ const contactReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: true
       }
+      case 'SET_OPEN_MODAL_CONTACT':
+        return {
+          ...state,
+          loading: true,
+          openModalContact: true,
+          idModalContact: action.idModalContact
+        }
+      case 'SET_CLOSE_MODAL_CONTACT':
+          return {
+            ...state,
+            openModalContact: false
+          }
     default:
       return state
   }

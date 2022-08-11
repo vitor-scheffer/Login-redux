@@ -17,3 +17,9 @@ dispatch({
 })
 navigate(`/contato`)
 }
+
+export const setModalDelete = (dispatch) => {
+  dispatch({
+    type: 'SET_CLOSE_MODAL_CONTACT'
+  })
+}

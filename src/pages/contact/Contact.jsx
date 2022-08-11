@@ -10,10 +10,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment'
 import photo from '../../images/no-user.jpeg'
-import Modal from '../../Utils/Modal'
+import ModalContact from '../../Utils/ModalContact'
 import { connect } from 'react-redux'
+import * as ContactActions from '../../store/actions/ContactActions'
 
-const Contacts = ({pessoa, loading}) => {
+
+const Contacts = ({pessoa, loading, dispatch, openModalContact}) => {
   const navigate = useNavigate()
 
   // const setup = async () => {
@@ -34,16 +36,19 @@ const Contacts = ({pessoa, loading}) => {
   //   setup()
   // },[])
 
-  // const handleDelete = async () => {
-  //   const notify = () => toast("Contato excluído com sucesso!");
-  //   try {
-  //     await apiDbc.delete(`/contato/${idContato}`)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  //   notify()
-  //   close()
-  // }
+  const handleDelete = async (idModal, dispatch, navigate) => {
+    const notify = () => toast("Contato excluído com sucesso!");
+    try {
+      await apiDbc.delete(`/contato/${idModal}`)
+    } catch (error) {
+      console.log(error)
+    }
+    notify()
+    dispatch({
+      type: 'SET_CLOSE_MODAL_CONTACT'
+    }) 
+    navigate('/')
+  }
 
 
     return (
@@ -80,9 +85,9 @@ const Contacts = ({pessoa, loading}) => {
               <p><TextSm>{item.descricao}</TextSm></p>
               <div className="btnsEdit btnsEditModal">
                 <Button width="150px" onClick={() => navigate(`/cadastrar-contato/${pessoa.idPessoa}/${item.idContato}`)}>Editar Contato</Button>
-                <Button width="150px" >Apagar Contato</Button>
+                <Button width="150px" onClick={() => dispatch({type: 'SET_OPEN_MODAL_CONTACT', idModalContact: item.idContato})}>Apagar Contato</Button>
               </div>
-              {/* {openModal && <Modal name="contato."closeModal={setOpenModal} confirmModal={handleDelete}/>} */}
+              {openModalContact && <ModalContact name="contato." closeModal={ContactActions.setModalDelete} navigate={navigate} dispatch={dispatch} confirmModal={handleDelete}/>}
             </Item>
           )) : <h1>Ainda não existem contatos cadastrados.</h1>
           }
@@ -101,7 +106,8 @@ const Contacts = ({pessoa, loading}) => {
 
 const mapStateToProps = state => ({
   pessoa: state.contactReducer.pessoa,
-  loading: state.contactReducer.loading
+  loading: state.contactReducer.loading,
+  openModalContact: state.contactReducer.openModalContact
 })
 
 export default connect(mapStateToProps)(Contacts)
