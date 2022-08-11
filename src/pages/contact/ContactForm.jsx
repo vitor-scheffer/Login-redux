@@ -54,7 +54,7 @@ const Contato = () => {
     try{
       await apiDbc.post(`/contato/${id}`, values)
       notify()
-      navigate('/')
+      navigate('/pessoa')
     } catch(error)
     {console.log(error);}
   }
@@ -64,7 +64,7 @@ const Contato = () => {
     try {
       await apiDbc.put(`/contato/${idContato}`, values)
       notify()
-      navigate('/')
+      navigate('/pessoa')
     } catch (error) {
       console.log(error)
     }

@@ -11,7 +11,7 @@ const Menu = ({dispatch}) => {
     <>
     <NavSideBar>
       <ul>
-          <Item name="Pessoa" url="/"/>
+          <Item name="Pessoa" url="/pessoa"/>
           <Item name="Cadastrar Pessoa" url="/cadastrar-pessoa"/>
       </ul>
     </NavSideBar>

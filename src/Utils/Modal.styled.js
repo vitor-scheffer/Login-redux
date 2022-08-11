@@ -45,8 +45,33 @@ export const Body = styled.div`
   && nav ul {
     display: flex;
     justify-content: space-between;
-    width: 976px;
+    width: 1050px;
     padding: 0 32px;
+  }
+  && nav ul li {
+    display: flex;
+    justify-content: center;
+    width: 122px;
+    list-style-type: none;
+  }
+
+  ul {
+    width: 100%;
+  }
+
+  p {
+    width: 350px;
+  }
+`;
+
+export const BodyContact = styled.div`
+  width: 100%;
+  max-height: 550px;
+  && nav ul {
+    display: flex;
+    justify-content: space-between;
+    width: 1050px;
+    padding: 0 130px;
   }
   && nav ul li {
     display: flex;

@@ -66,7 +66,7 @@ const Endereco = () => {
     try {
       await apiDbc.put(`/endereco/${idEndereco}`, values)
       notify()
-      navigate('/')
+      navigate('/pessoa')
     } catch (error) {
       console.log(error)
     }

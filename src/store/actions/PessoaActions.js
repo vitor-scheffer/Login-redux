@@ -68,7 +68,7 @@ import 'react-toastify/dist/ReactToastify.css';
         type: 'SET_LOADING_PEOPLE'
       })
       notify()
-      navigate('/')
+      navigate('/pessoa')
       setup()
     } catch (error) {
       console.log(error)
@@ -89,7 +89,7 @@ import 'react-toastify/dist/ReactToastify.css';
         type: 'SET_LOADING_PEOPLE'
       })
       notify()
-      navigate('/')
+      navigate('/pessoa')
       setup()
     } catch (error) {
       console.log(error)

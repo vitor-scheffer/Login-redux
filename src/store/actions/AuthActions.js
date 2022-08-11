@@ -14,7 +14,7 @@ const handleLogin = async (user, dispatch, navigate) => {
     localStorage.setItem('token', data)
     dispatch(logado)
     notify()
-    navigate('/')
+    navigate('/pessoa')
   } catch (error) {
     console.log(error);
   }
@@ -25,7 +25,7 @@ const handleSignUp = async (values, dispatch, navigate) => {
     try {
       await apiDbc.post('/auth/create', values)
       notify()
-      navigate('/login')
+      navigate('/')
     } catch(error){
       console.log(error)
       const notifyError = () => toast(error.response.data.message);
@@ -44,7 +44,7 @@ const handleLogout = async (dispatch, navigate) => {
     localStorage.removeItem('token')
     dispatch(logado)
     notify()
-    navigate('/login')
+    navigate('/')
   } catch (error) {
     console.log(error);
   }

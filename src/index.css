@@ -92,4 +92,9 @@ button:disabled {
   flex-direction: column;
 }
 
+.datasUser {
+  display: flex;
+  gap: 25px;
+}
+
 

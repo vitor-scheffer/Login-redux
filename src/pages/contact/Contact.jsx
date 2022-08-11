@@ -1,4 +1,4 @@
-import { ModalEndereco, Body } from '../../Utils/Modal.styled'
+import { ModalEndereco, Body, BodyContact } from '../../Utils/Modal.styled'
 import { Button } from '../../components/Button/Button'
 import { redColor, colorHoverMenu } from '../../consts'
 import { useState, useEffect } from 'react'
@@ -29,7 +29,7 @@ const Contacts = ({pessoa, loading, dispatch, openModalContact}) => {
     dispatch({
       type: 'SET_CLOSE_MODAL_CONTACT'
     }) 
-    navigate('/')
+    navigate('/pessoa')
   }
 
 
@@ -37,7 +37,7 @@ const Contacts = ({pessoa, loading, dispatch, openModalContact}) => {
       <div className="modalBackgroundEnd">
       <ToastContainer />
       <ModalEndereco>
-        <Button width="80px" padding="10px" className="closeBtn" onClick={() => navigate('/')}> Voltar </Button>
+        <Button width="80px" padding="10px" className="closeBtn" onClick={() => navigate('/pessoa')}> Voltar </Button>
         <div className="infoPessoa">
           <div>
           <img src={photo} alt="" />
@@ -50,7 +50,7 @@ const Contacts = ({pessoa, loading, dispatch, openModalContact}) => {
           <TextSm>CPF: {pessoa.cpf}</TextSm>
         </div>
         </div>
-        <Body>
+        <BodyContact>
         <nav>
           <ul>
             <li><TextSm color={colorHoverMenu}>Tipo</TextSm> </li>
@@ -75,7 +75,7 @@ const Contacts = ({pessoa, loading, dispatch, openModalContact}) => {
           }
           
         </Lista>
-        </Body>
+        </BodyContact>
         <div>
           <Button width="180px" onClick={() => navigate(`/cadastrar-contato/${pessoa.idPessoa}`)}>Cadastrar Contato</Button>
         </div>

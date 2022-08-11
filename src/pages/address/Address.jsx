@@ -29,7 +29,7 @@ const Address = ({pessoa, loading, dispatch, openModalAddress}) => {
     dispatch({
       type: 'SET_CLOSE_MODAL_ADDRESS'
     }) 
-    navigate('/')
+    navigate('/pessoa')
   }
 
   
@@ -40,7 +40,7 @@ const Address = ({pessoa, loading, dispatch, openModalAddress}) => {
       <div className="modalBackgroundEnd">
       <ToastContainer />
       <ModalEndereco>
-        <Button width="80px" padding="10px" className="closeBtn" onClick={() => navigate('/')}> Voltar </Button>
+        <Button width="80px" padding="10px" className="closeBtn" onClick={() => navigate('/pessoa')}> Voltar </Button>
         <div className="infoPessoa">
           <div>
           <img src={photo} alt="" />
