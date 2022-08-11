@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import moment from 'moment'
 import photo from '../../images/no-user.jpeg'
-import Modal from '../../Utils/Modal'
+import ModalAddress from '../../Utils/ModalAddress'
 import { connect } from 'react-redux'
 import Loading from '../../components/Loading/Loading'
 import * as AddressActions from '../../store/actions/AddressActions'
@@ -35,7 +35,7 @@ const Address = ({pessoa, loading, dispatch, openModalAddress}) => {
   //   setup()
   // },[])
 
-  const handleDelete = async (idModal, dispatch) => {
+  const handleDelete = async (idModal, dispatch, navigate) => {
     const notify = () => toast("Endereço excluído com sucesso!");
     try {
       await apiDbc.delete(`/endereco/${idModal}`)
@@ -45,16 +45,13 @@ const Address = ({pessoa, loading, dispatch, openModalAddress}) => {
     notify()
     dispatch({
       type: 'SET_CLOSE_MODAL_ADDRESS'
-    })
+    }) 
     navigate('/')
   }
 
-  const setup = () => {
-  }
   
   useEffect(() => {
-    setup()
-  },[])
+  },[openModalAddress])
 
   // if(loading) {
   //   return ( <Loading /> )
@@ -104,9 +101,9 @@ const Address = ({pessoa, loading, dispatch, openModalAddress}) => {
               <p><TextSm>{item.pais}</TextSm></p>
               <div className="btnsEdit btnsEditModal">
                 <Button width="150px" onClick={() => navigate(`/cadastrar-endereco/${pessoa.idPessoa}/${item.idEndereco}`)}>Editar Endereço</Button>
-                <Button width="150px" onClick={() => dispatch({type: 'SET_OPEN_MODAL_ADDRESS', idModal: item.idPessoa})}>Apagar Endereço</Button>
+                <Button width="150px" onClick={() => dispatch({type: 'SET_OPEN_MODAL_ADDRESS', idModalAddress: item.idEndereco})}>Apagar Endereço</Button>
               </div>
-              {openModalAddress && <Modal name="endereço."closeModal={AddressActions.setModalDelete} dispatch={dispatch} confirmModal={handleDelete}/>}
+              {openModalAddress && <ModalAddress name="endereço." closeModal={AddressActions.setModalDelete} navigate={navigate} dispatch={dispatch} confirmModal={handleDelete}/>}
             </Item>
           )) : <h1>Ainda não existem endereços cadastrados.</h1>
           }
