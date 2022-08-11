@@ -83,4 +83,13 @@ button:disabled {
   gap: 100px;
 }
 
+.btnsEdit {
+  display: flex;
+  gap: 10px;
+}
+
+.btnsEditModal {
+  flex-direction: column;
+}
+
 

@@ -18,24 +18,6 @@ import * as ContactActions from '../../store/actions/ContactActions'
 const Contacts = ({pessoa, loading, dispatch, openModalContact}) => {
   const navigate = useNavigate()
 
-  // const setup = async () => {
-  //   try {
-  //     const { data } = await apiDbc.get(`/pessoa/lista-completa?idPessoa=${id}`)
-  //     setPessoa(data[0])
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // const setDelete = (idContato) => {
-  //   setIdContato(idContato)
-  //   setOpenModal(true)
-  // }
-
-  // useEffect(() => {
-  //   setup()
-  // },[])
-
   const handleDelete = async (idModal, dispatch, navigate) => {
     const notify = () => toast("Contato excluído com sucesso!");
     try {

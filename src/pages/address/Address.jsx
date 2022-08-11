@@ -17,23 +17,6 @@ import * as AddressActions from '../../store/actions/AddressActions'
 
 const Address = ({pessoa, loading, dispatch, openModalAddress}) => {
   const navigate = useNavigate()
-  // const setup = async () => {
-  //   try {
-  //     const { data } = await apiDbc.get(`/pessoa/lista-completa?idPessoa=${id}`)
-  //     setPessoa(data[0])
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // const setDelete = (idEndereco) => {
-  //   setIdEndereco(idEndereco)
-  //   setOpenModal(true)
-  // }
-
-  // useEffect(() => {
-  //   setup()
-  // },[])
 
   const handleDelete = async (idModal, dispatch, navigate) => {
     const notify = () => toast("Endereço excluído com sucesso!");
@@ -52,10 +35,6 @@ const Address = ({pessoa, loading, dispatch, openModalAddress}) => {
   
   useEffect(() => {
   },[openModalAddress])
-
-  // if(loading) {
-  //   return ( <Loading /> )
-  // } 
 
     return (
       <div className="modalBackgroundEnd">
