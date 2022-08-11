@@ -79,7 +79,7 @@ const Contacts = ({pessoa, loading}) => {
               <p><TextSm>{item.telefone}</TextSm></p>
               <p><TextSm>{item.descricao}</TextSm></p>
               <div className="btnsEdit btnsEditModal">
-                <Button width="150px" >Editar Contato</Button>
+                <Button width="150px" onClick={() => navigate(`/cadastrar-contato/${pessoa.idPessoa}/${item.idContato}`)}>Editar Contato</Button>
                 <Button width="150px" >Apagar Contato</Button>
               </div>
               {/* {openModal && <Modal name="contato."closeModal={setOpenModal} confirmModal={handleDelete}/>} */}
@@ -90,7 +90,7 @@ const Contacts = ({pessoa, loading}) => {
         </Lista>
         </Body>
         <div>
-          <Button width="180px">Cadastrar Contato</Button>
+          <Button width="180px" onClick={() => navigate(`/cadastrar-contato/${pessoa.idPessoa}`)}>Cadastrar Contato</Button>
         </div>
         </ModalEndereco>
         

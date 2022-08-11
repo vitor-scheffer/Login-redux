@@ -19,7 +19,7 @@ import {ErrorsAlert } from '../../components/ErrorsAlert'
 const contactSchema = Yup.object().shape({
   tipoContato: Yup.string().required('Campo obrigatório.'),
   telefone: Yup.string().required('Campo obrigatório.'),
-  descricao: Yup.string()
+  descricao: Yup.string().required('Campo obrigatório.')
 })
 
 const Contato = () => {
@@ -54,7 +54,7 @@ const Contato = () => {
     try{
       await apiDbc.post(`/contato/${id}`, values)
       notify()
-      navigate('/pessoa')
+      navigate('/')
     } catch(error)
     {console.log(error);}
   }
@@ -64,7 +64,7 @@ const Contato = () => {
     try {
       await apiDbc.put(`/contato/${idContato}`, values)
       notify()
-      navigate('/pessoa')
+      navigate('/')
     } catch (error) {
       console.log(error)
     }
@@ -128,7 +128,7 @@ const Contato = () => {
               </FormContentPeople>
               
               <FormContentPeople>
-                <label htmlFor="descricao"><TextSm color={colorHoverMenu} fontSize='12px'>DESCRIÇÃO</TextSm></label>
+                <label htmlFor="descricao"><TextSm color={colorHoverMenu} fontSize='12px'>DESCRIÇÃO*</TextSm></label>
                 <Field
                 id="descricao"
                 name="descricao"
@@ -138,7 +138,7 @@ const Contato = () => {
              ) : null}
               </FormContentPeople>
               </div>
-              <Button disabled={errors.tipoContato || errors.telefone} type="submit">{isUpdate ? 'Atualizar' : 'Cadastrar'}</Button>
+              <Button disabled={errors.tipoContato || errors.telefone || errors.descricao} type="submit">{isUpdate ? 'Atualizar' : 'Cadastrar'}</Button>
             </Form>
             )}
           </Formik>
