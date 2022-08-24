@@ -1,10 +1,10 @@
 Projeto CRUD de site de cadastro de colaboradores.
 
-<a href="https://tarefa-crud.vercel.app/" target="_blank">
+<a href="https://login-redux.vercel.app/" target="_blank">
   <img src="https://user-images.githubusercontent.com/103120313/181872853-9476297f-d31e-4fc4-a7b7-83dd40e3709f.png"></img>
 </a>
 <br>
-O site pode ser acessado em: https://tarefa-crud.vercel.app/ <br>
+O site pode ser acessado em: https://login-redux.vercel.app/ <br>
 <br>
 <br>
 
